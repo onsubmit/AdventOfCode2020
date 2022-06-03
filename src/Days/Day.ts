@@ -1,6 +1,4 @@
-import IDay from "../IDay";
-
-export default abstract class Day implements IDay {
+export default abstract class Day {
   protected lines: number[];
 
   protected constructor(lines: number[]) {
