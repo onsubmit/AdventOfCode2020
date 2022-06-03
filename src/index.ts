@@ -1,6 +1,7 @@
+import Day from "./Days/Day";
 import Day01 from "./Days/Day01";
 
-const days = [Day01];
+const days: typeof Day[] = [Day01];
 
 days.forEach(async (Day, i) => {
   const day = await Day.initializeAsync();

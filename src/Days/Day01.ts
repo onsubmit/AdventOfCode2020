@@ -2,11 +2,7 @@ import FileReader from "../FileReader";
 import LineParser from "../LineParser";
 import Day from "./Day";
 
-export default class Day01 extends Day<number> {
-  protected constructor(lines: number[]) {
-    super(lines);
-  }
-
+export default class Day01 extends Day {
   static initializeAsync = async (): Promise<Day01> => {
     const lines = await FileReader.getLines("../input/Day01.txt", LineParser.toNumber);
     return new Day01(lines);
