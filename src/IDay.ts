@@ -1,3 +1,4 @@
 export default interface IDay {
-  getSolution(): Promise<number>;
+  getPartOneSolution(): Promise<number>;
+  getPartTwoSolution(): Promise<number>;
 }
