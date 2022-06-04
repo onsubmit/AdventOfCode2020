@@ -1,18 +1,19 @@
-import events from "events";
-import fs from "fs";
+import lineByLine from "n-readlines";
 import path from "path";
-import readline from "readline";
 
 export default class FileReader {
-  static getLines = async <T>(relativePath: string, parser: (line: string) => T): Promise<T[]> => {
+  static getLines = <T>(relativePath: string, parser: (line: string) => T): T[] => {
     const inputPath = path.resolve(__dirname, relativePath);
-    const input = fs.createReadStream(inputPath);
-    const rl = readline.createInterface({ input });
 
     const lines: T[] = [];
-    rl.on("line", (line) => lines.push(parser(line)));
+    const liner = new lineByLine(inputPath);
 
-    await events.once(rl, "close");
+    let buffer: false | Buffer;
+    while ((buffer = liner.next())) {
+      const line = buffer.toString("ascii");
+      lines.push(parser(line));
+    }
+
     return lines;
   };
 }

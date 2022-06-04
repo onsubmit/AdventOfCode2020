@@ -1,12 +1,9 @@
-import FileReader from "../FileReader";
 import LineParser from "../LineParser";
 import Day from "./Day";
 
-export default class Day01 extends Day {
-  static initializeAsync = async (): Promise<Day01> => {
-    const lines = await FileReader.getLines("../input/Day01.txt", LineParser.toNumber);
-    return new Day01(lines);
-  };
+export default class Day01 extends Day<number> {
+  relativeInputPath = "../input/Day01.txt";
+  parser = LineParser.toNumber;
 
   getPartOneSolution = async (): Promise<number> => {
     for (let i = 0; i < this.lines.length; i++) {

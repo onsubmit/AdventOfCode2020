@@ -11,12 +11,14 @@
     "build": "npx ts-node src/index.ts"
   },
   "devDependencies": {
+    "@types/n-readlines": "^1.0.3",
     "@types/node": "^16.11.11",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "eslint": "^8.4.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "n-readlines": "^1.0.1",
     "prettier": "^2.5.1",
     "prettier-plugin-organize-imports": "^2.3.4",
     "ts-node": "^10.8.0",

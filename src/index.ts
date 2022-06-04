@@ -1,10 +1,9 @@
-import Day from "./Days/Day";
 import Day01 from "./Days/Day01";
 
-const days: typeof Day[] = [Day01];
+const days = [Day01];
 
 days.forEach(async (Day, i) => {
-  const day = await Day.initializeAsync();
+  const day = new Day();
   const solution1 = await day.getPartOneSolution();
   const solution2 = await day.getPartTwoSolution();
   console.log(`Day ${i + 1}, part 1: ${solution1}`);

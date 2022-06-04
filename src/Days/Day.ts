@@ -1,11 +1,19 @@
-export default abstract class Day {
-  protected lines: number[];
+import FileReader from "../FileReader";
 
-  protected constructor(lines: number[]) {
-    this.lines = lines;
+export default abstract class Day<T> {
+  private _lines?: T[];
+
+  protected get lines(): T[] {
+    if (!this._lines) {
+      this._lines = FileReader.getLines(this.relativeInputPath, this.parser);
+    }
+
+    return this._lines;
   }
 
-  static initializeAsync: () => Promise<Day>;
+  abstract relativeInputPath: string;
+  abstract parser: (line: string) => T;
+
   abstract getPartOneSolution: () => Promise<number>;
   abstract getPartTwoSolution: () => Promise<number>;
 }
