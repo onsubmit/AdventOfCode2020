@@ -1,5 +1,7 @@
 import FileReader from "../FileReader";
 
+export type DayType<T> = new () => Day<T>;
+
 export default abstract class Day<T> {
   private _lines?: T[];
 

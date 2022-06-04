@@ -1,6 +1,7 @@
+import { DayType } from "./Days/Day";
 import Day01 from "./Days/Day01";
 
-const days = [Day01];
+const days: DayType<any>[] = [Day01];
 
 days.forEach(async (Day, i) => {
   const day = new Day();
