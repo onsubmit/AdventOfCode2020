@@ -16,6 +16,6 @@ export default abstract class Day<T> {
   abstract relativeInputPath: string;
   abstract parser: (line: string) => T;
 
-  abstract getPartOneSolution: () => Promise<number>;
-  abstract getPartTwoSolution: () => Promise<number>;
+  abstract getPartOneSolution: () => number;
+  abstract getPartTwoSolution: () => number;
 }

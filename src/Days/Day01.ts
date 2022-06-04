@@ -2,10 +2,10 @@ import LineParser from "../LineParser";
 import Day from "./Day";
 
 export default class Day01 extends Day<number> {
-  relativeInputPath = "../input/Day01.txt";
+  relativeInputPath = `../input/${Day01.name}.txt`;
   parser = LineParser.toNumber;
 
-  getPartOneSolution = async (): Promise<number> => {
+  getPartOneSolution = (): number => {
     for (let i = 0; i < this.lines.length; i++) {
       for (let j = 0; j < this.lines.length; j++) {
         if (i === j) {
@@ -24,7 +24,7 @@ export default class Day01 extends Day<number> {
     throw new Error("No solution found");
   };
 
-  getPartTwoSolution = async (): Promise<number> => {
+  getPartTwoSolution = (): number => {
     for (let i = 0; i < this.lines.length; i++) {
       for (let j = 0; j < this.lines.length; j++) {
         if (i === j) {
