@@ -10,7 +10,7 @@ export default class FileReader {
 
     let buffer: false | Buffer;
     while ((buffer = liner.next())) {
-      const line = buffer.toString("ascii");
+      const line = buffer.toString("ascii").trimEnd();
       lines.push(parser(line));
     }
 
