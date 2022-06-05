@@ -18,21 +18,42 @@ export default class Day02 extends Day<Line> {
   getPartOneSolution = (): number => {
     let count = 0;
     this.lines.forEach((line) => {
-      if (this.isPasswordValidForPolicy(line)) {
+      if (this.isPasswordValidForPolicyPart1(line)) {
         count++;
       }
     });
+
     return count;
   };
 
   getPartTwoSolution = (): number => {
-    return 0;
-    throw new Error("No solution found");
+    let count = 0;
+    this.lines.forEach((line) => {
+      if (this.isPasswordValidForPolicyPart2(line)) {
+        count++;
+      }
+    });
+
+    return count;
   };
 
-  private isPasswordValidForPolicy = (line: Line): boolean => {
+  private isPasswordValidForPolicyPart1 = (line: Line): boolean => {
     const count = line.password.split(line.policy.char).length - 1;
     return count >= line.policy.min && count <= line.policy.max;
+  };
+
+  private isPasswordValidForPolicyPart2 = (line: Line): boolean => {
+    let matches = 0;
+
+    if (line.password.charAt(line.policy.min - 1) === line.policy.char) {
+      matches++;
+    }
+
+    if (line.password.charAt(line.policy.max - 1) === line.policy.char) {
+      matches++;
+    }
+
+    return matches === 1;
   };
 }
 
