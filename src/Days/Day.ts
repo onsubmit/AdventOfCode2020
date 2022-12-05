@@ -20,7 +20,9 @@ export default abstract class Day<T> {
     return lines;
   };
 
-  protected afterParse = (): void => {};
+  protected afterParse = (): void => {
+    // No default implementation.
+  };
 
   abstract relativeInputPath: string;
   abstract parser: (line: string) => T | undefined;
