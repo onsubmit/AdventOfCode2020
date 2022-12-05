@@ -3,8 +3,9 @@ import Day01 from "./Days/Day01";
 import Day02 from "./Days/Day02";
 import Day03 from "./Days/Day03";
 import Day04 from "./Days/Day04";
+import Day05 from "./Days/Day05";
 
-const days: DayType<any>[] = [Day01, Day02, Day03, Day04];
+const days: DayType<any>[] = [Day01, Day02, Day03, Day04, Day05];
 
 days.forEach(async (Day, i) => {
   const day = new Day();
