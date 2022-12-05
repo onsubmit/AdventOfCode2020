@@ -4,6 +4,66 @@ const passportFields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid"] 
 type PassportField = typeof passportFields[number];
 type Passport = Map<PassportField, string>;
 
+const fieldValidationMap: Map<PassportField, (value: string) => boolean> = new Map([
+  [
+    "byr",
+    (value: string): boolean => {
+      const birthYear = parseInt(value, 10);
+      return birthYear >= 1920 && birthYear <= 2002;
+    },
+  ],
+  [
+    "iyr",
+    (value: string): boolean => {
+      const issueYear = parseInt(value, 10);
+      return issueYear >= 2010 && issueYear <= 2020;
+    },
+  ],
+  [
+    "eyr",
+    (value: string): boolean => {
+      const expirationYear = parseInt(value, 10);
+      return expirationYear >= 2020 && expirationYear <= 2030;
+    },
+  ],
+  [
+    "hgt",
+    (value: string): boolean => {
+      const height = parseInt(value.substring(0, value.length - 2), 10);
+      if (value.endsWith("cm")) {
+        return height >= 150 && height <= 193;
+      }
+
+      if (value.endsWith("in")) {
+        return height >= 59 && height <= 76;
+      }
+
+      return false;
+    },
+  ],
+  [
+    "hcl",
+    (value: string): boolean => {
+      const r = /^#([0-9a-f]{6})$/;
+      return r.test(value);
+    },
+  ],
+  [
+    "ecl",
+    (value: string): boolean => {
+      return ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].includes(value);
+    },
+  ],
+  [
+    "pid",
+    (value: string): boolean => {
+      const r = /^\d{9}$/;
+      return r.test(value);
+    },
+  ],
+  ["cid", (_: string): boolean => true],
+]);
+
 function isPassportField(maybePassportField: string): maybePassportField is PassportField {
   const field = passportFields.find((f) => f === maybePassportField);
   return !!field;
@@ -54,7 +114,7 @@ export default class Day04 extends Day<void> {
   getPartOneSolution = (): number => {
     let numValidPassports = 0;
     this._passports.forEach((passport: Passport) => {
-      if (isValidPassport(passport)) {
+      if (isValidPassportPartOne(passport)) {
         numValidPassports++;
       }
     });
@@ -63,11 +123,18 @@ export default class Day04 extends Day<void> {
   };
 
   getPartTwoSolution = (): number => {
-    return 0;
+    let numValidPassports = 0;
+    this._passports.forEach((passport: Passport) => {
+      if (isValidPassportPartTwo(passport)) {
+        numValidPassports++;
+      }
+    });
+
+    return numValidPassports;
   };
 }
 
-function isValidPassport(passport: Passport): boolean {
+function isValidPassportPartOne(passport: Passport): boolean {
   if (passport.size === passportFields.length) {
     return true;
   }
@@ -77,4 +144,28 @@ function isValidPassport(passport: Passport): boolean {
   }
 
   return false;
+}
+
+function isValidPassportPartTwo(passport: Passport): boolean {
+  return passportFields.every((field) => {
+    if (field === "cid") {
+      return true;
+    }
+
+    const validationFunction = fieldValidationMap.get(field);
+    if (!validationFunction) {
+      throw "Missing field validation function";
+    }
+
+    const value = passport.get(field);
+    if (value === undefined) {
+      return false;
+    }
+
+    if (validationFunction(value)) {
+      return true;
+    }
+
+    return false;
+  });
 }
