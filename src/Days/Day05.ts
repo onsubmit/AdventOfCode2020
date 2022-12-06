@@ -11,6 +11,10 @@ export default class Day05 extends Day<string> {
   private readonly _maxSeats = 7;
   private readonly _numRowChars = 7;
   private readonly _numSeatChars = 3;
+  private readonly _takenSeats: { [seatId: number]: boolean } = {};
+
+  private _minSeatId = Number.MAX_VALUE;
+  private _maxSeatId = Number.MIN_VALUE;
 
   constructor() {
     super();
@@ -30,8 +34,6 @@ export default class Day05 extends Day<string> {
       min: 0,
       max: this._maxSeats,
     };
-
-    let maxSeatId = Number.MIN_VALUE;
 
     for (const line of this.lines) {
       const rowChars = line.substring(0, this._numRowChars);
@@ -54,15 +56,23 @@ export default class Day05 extends Day<string> {
 
       const row = finalRowRange.min;
       const seat = finalSeatRange.min;
-      const seatId = row * 8 + seat;
-      maxSeatId = Math.max(maxSeatId, seatId);
+      const seatId = row * (this._maxSeats + 1) + seat;
+      this._minSeatId = Math.min(this._minSeatId, seatId);
+      this._maxSeatId = Math.max(this._maxSeatId, seatId);
+      this._takenSeats[seatId] = true;
     }
 
-    return maxSeatId;
+    return this._maxSeatId;
   };
 
   getPartTwoSolution = (): number => {
-    return 0;
+    for (let seat = this._minSeatId + 1; seat < this._maxSeatId; seat++) {
+      if (this._takenSeats[seat - 1] && !this._takenSeats[seat] && this._takenSeats[seat + 1]) {
+        return seat;
+      }
+    }
+
+    throw "Seat ID not found";
   };
 
   private static getAccumulatedRange(accumulator: Range, character: string, lowerHalf: string): Range {
