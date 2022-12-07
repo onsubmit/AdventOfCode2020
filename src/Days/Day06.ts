@@ -21,6 +21,17 @@ export default class Day06 extends Day<string> {
   };
 
   getPartTwoSolution = (): number => {
-    return 0;
+    let sum = 0;
+    for (let i = 0; i < this.lines.length; i++) {
+      let questionsAnsweredByAll: string[] = [...this.lines[i]];
+      while (this.lines[++i]) {
+        const questions = [...this.lines[i]];
+        questionsAnsweredByAll = questionsAnsweredByAll.filter((q) => questions.includes(q));
+      }
+
+      sum += questionsAnsweredByAll.length;
+    }
+
+    return sum;
   };
 }
