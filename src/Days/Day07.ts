@@ -54,7 +54,11 @@ export default class Day07 extends Day<Bag> {
     return numCanContainGoldBag;
   };
 
-  canContainGoldBag = (bag: Bag): boolean => {
+  getPartTwoSolution = (): number => {
+    return 0;
+  };
+
+  private canContainGoldBag = (bag: Bag): boolean => {
     if (this._knownBags[bag.color] === false) {
       return false;
     }
@@ -82,9 +86,5 @@ export default class Day07 extends Day<Bag> {
 
     this._knownBags[bag.color] = false;
     return false;
-  };
-
-  getPartTwoSolution = (): number => {
-    return 0;
   };
 }
