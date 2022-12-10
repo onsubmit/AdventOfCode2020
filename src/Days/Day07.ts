@@ -2,9 +2,9 @@ import Day from "./Day";
 
 class Bag {
   color: string;
-  containedBags: string[];
+  containedBags: { [color: string]: number };
 
-  constructor(color: string, containedBags: string[] = []) {
+  constructor(color: string, containedBags: { [color: string]: number } = {}) {
     this.color = color;
     this.containedBags = containedBags;
   }
@@ -21,14 +21,16 @@ class Bag {
     const containedBags = split[1].split(",");
 
     const r = /((?<number>\d) (?<color>[\w ]+) bag(s?))+/;
-    const bags = containedBags.map((b) => {
+    const bags: { [color: string]: number } = {};
+    containedBags.forEach((b) => {
       const res = r.exec(b.trim());
+      const number = res?.groups?.number;
       const color = res?.groups?.color;
-      if (!color) {
+      if (!number || !color) {
         throw "Invalid data";
       }
 
-      return color;
+      bags[color] = parseInt(number, 10);
     });
 
     return new Bag(color, bags);
@@ -66,7 +68,7 @@ export default class Day07 extends Day<Bag> {
       return false;
     }
 
-    for (const containedBag of bag.containedBags) {
+    for (const containedBag of Object.keys(bag.containedBags)) {
       if (containedBag === "shiny gold") {
         this._knownBags[bag.color] = true;
         return true;
