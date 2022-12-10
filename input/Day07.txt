@@ -582,7 +582,7 @@ muted red bags contain 1 striped crimson bag, 5 light blue bags.
 dark violet bags contain 2 muted blue bags, 1 light bronze bag.
 striped chartreuse bags contain 1 dark violet bag, 1 faded turquoise bag, 3 vibrant tomato bags, 5 dotted teal bags.
 dull turquoise bags contain 3 drab tan bags.
-vibrant olive bags contain 2 drab purple bags.
+  vibrant olive bags contain 2 drab purple bags.
 shiny yellow bags contain 2 faded lavender bags, 4 shiny cyan bags.
 posh lime bags contain 3 light plum bags, 4 clear magenta bags.
 dotted aqua bags contain 3 dim lime bags, 2 light green bags.

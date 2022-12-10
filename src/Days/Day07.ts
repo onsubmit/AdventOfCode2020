@@ -43,6 +43,7 @@ export default class Day07 extends Day<Bag> {
 
   private _bags: { [color: string]: Bag } = {};
   private _knownBagsCanContainShinyGoldBag: { [color: string]: boolean } = {};
+  private _knownBagsContainedCount: { [color: string]: number } = {};
 
   getPartOneSolution = (): number => {
     for (let i = 0; i < this.lines.length; i++) {
@@ -55,7 +56,7 @@ export default class Day07 extends Day<Bag> {
   };
 
   getPartTwoSolution = (): number => {
-    return 0;
+    return this.getContainedBagCount(this._bags["shiny gold"]);
   };
 
   private canContainGoldBag = (bag: Bag): boolean => {
@@ -67,12 +68,13 @@ export default class Day07 extends Day<Bag> {
       return true;
     }
 
-    if (bag.containedBags.length === 0) {
+    const containedBagNames = Object.keys(bag.containedBags);
+    if (containedBagNames.length === 0) {
       this._knownBagsCanContainShinyGoldBag[bag.color] = false;
       return false;
     }
 
-    for (const containedBag of Object.keys(bag.containedBags)) {
+    for (const containedBag of containedBagNames) {
       if (containedBag === "shiny gold") {
         this._knownBagsCanContainShinyGoldBag[bag.color] = true;
         return true;
@@ -86,5 +88,30 @@ export default class Day07 extends Day<Bag> {
 
     this._knownBagsCanContainShinyGoldBag[bag.color] = false;
     return false;
+  };
+
+  private getContainedBagCount = (bag: Bag): number => {
+    if (this._knownBagsContainedCount[bag.color] === 0) {
+      return 0;
+    }
+
+    if (this._knownBagsContainedCount[bag.color]) {
+      return this._knownBagsContainedCount[bag.color];
+    }
+
+    const containedBagNames = Object.keys(bag.containedBags);
+    if (containedBagNames.length === 0) {
+      this._knownBagsContainedCount[bag.color] = 0;
+      return 0;
+    }
+
+    let sum = 0;
+    for (const containedBag of containedBagNames) {
+      const numBags = bag.containedBags[containedBag] * (1 + this.getContainedBagCount(this._bags[containedBag]));
+      sum += numBags;
+    }
+
+    this._knownBagsContainedCount[bag.color] = sum;
+    return sum;
   };
 }
