@@ -42,7 +42,7 @@ export default class Day07 extends Day<Bag> {
   parser = Bag.fromInput;
 
   private _bags: { [color: string]: Bag } = {};
-  private _knownBags: { [color: string]: boolean } = {};
+  private _knownBagsCanContainShinyGoldBag: { [color: string]: boolean } = {};
 
   getPartOneSolution = (): number => {
     for (let i = 0; i < this.lines.length; i++) {
@@ -59,32 +59,32 @@ export default class Day07 extends Day<Bag> {
   };
 
   private canContainGoldBag = (bag: Bag): boolean => {
-    if (this._knownBags[bag.color] === false) {
+    if (this._knownBagsCanContainShinyGoldBag[bag.color] === false) {
       return false;
     }
 
-    if (this._knownBags[bag.color] === true) {
+    if (this._knownBagsCanContainShinyGoldBag[bag.color] === true) {
       return true;
     }
 
     if (bag.containedBags.length === 0) {
-      this._knownBags[bag.color] = false;
+      this._knownBagsCanContainShinyGoldBag[bag.color] = false;
       return false;
     }
 
     for (const containedBag of Object.keys(bag.containedBags)) {
       if (containedBag === "shiny gold") {
-        this._knownBags[bag.color] = true;
+        this._knownBagsCanContainShinyGoldBag[bag.color] = true;
         return true;
       }
 
       if (this.canContainGoldBag(this._bags[containedBag])) {
-        this._knownBags[bag.color] = true;
+        this._knownBagsCanContainShinyGoldBag[bag.color] = true;
         return true;
       }
     }
 
-    this._knownBags[bag.color] = false;
+    this._knownBagsCanContainShinyGoldBag[bag.color] = false;
     return false;
   };
 }
